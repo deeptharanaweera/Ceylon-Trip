@@ -162,7 +162,7 @@ function Hero() {
 
       <div className="sm:px-10 md:px-32 lg:px-56 xl:px-50 px-5 mb-20">
         <h1 className="font-bold font-poppins text-[40px] md:text-[65px] xl:text-[65px] text-yellow-500">Historical <span className="text-[#6a3002]">Places</span></h1>
-        <p className="text-xl md:text-xl xl:text-xl text-gray-500">Sri Lanka, a land rich in history and culture, is home to a wealth of historical sites that showcase its ancient civilizations, religious heritage, and colonial influences. These sites offer a fascinating glimpse into the island's vibrant past, making it a must-visit destination for history enthusiasts. Here are some of the most iconic historical places in Sri Lanka</p>
+        <p className="text-xl md:text-xl xl:text-xl text-gray-500">Sri Lanka, a land rich in history and culture, is home to a wealth of historical sites that showcase its ancient civilizations, religious heritage, and colonial influences. These sites offer a fascinating glimpse into the island s vibrant past, making it a must-visit destination for history enthusiasts. Here are some of the most iconic historical places in Sri Lanka</p>
         <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5 mt-5  xl:mt-10">
           {place?.placeData?.itinerary?.categories?.historical.map((historical, index) => (
             <BeachPlaceCard place={historical} key={index} />
