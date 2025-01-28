@@ -19,7 +19,7 @@ import { IoClose, IoMenu } from "react-icons/io5";
 function Header() {
   const user = JSON.parse(localStorage.getItem('user'));
   const [openDialog, setOpenDialog] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);  
 
   useEffect(() => {
     console.log(user);
@@ -62,7 +62,7 @@ function Header() {
           </button>
           {user ? (
           <Popover className="">
-            <PopoverTrigger className="bg-transparent rounded-full w-14 h-14 p-0 border-2 border-blue-600 block md:hidden"><img src={user?.picture} alt="" className="rounded-full " /></PopoverTrigger>
+            <PopoverTrigger className="bg-transparent rounded-full w-12 h-12 p-0 border-2 border-blue-600 block md:hidden"><img src={user?.picture} alt="" className="rounded-full " /></PopoverTrigger>
             <PopoverContent>
               <div>
                 <h2 className="text-lg font-bold text-black font-poppins">{user?.name}</h2>

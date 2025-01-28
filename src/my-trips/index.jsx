@@ -1,3 +1,4 @@
+import Footer from "@/components/custom/Footer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/service/firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -35,6 +36,7 @@ function MyTrips() {
     };
 
     return (
+        <div>
         <div className="p-5 md:p-10 lg:p-10 xl:p-10 md:px-20 lg:px-20 xl:px-28 mt-[70px] md:mt-[80px]">
             <h1 className="font-bold font-poppins text-[40px] md:text-[65px] xl:text-[65px] text-yellow-500">
                 My <span className="text-[#6a3002]">Trips</span>
@@ -59,6 +61,8 @@ function MyTrips() {
                     </div>
                 )}
             </div>
+        </div>
+            <Footer/>
         </div>
     );
 }

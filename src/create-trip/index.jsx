@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 
@@ -89,6 +90,7 @@ function CreateTrip() {
       setOpenDialog(true);
       return;
     }
+    // window.location.reload();
     let hasError = false;
 
     // Validate number of days
@@ -184,13 +186,20 @@ function CreateTrip() {
         <div className="flex flex-col">
           <label htmlFor="" className="text-xl font-semibold font-poppins mb-2">What is your destination? </label>
           <GooglePlacesAutocomplete
-            className=''
+            className=""
             apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
             selectProps={{
               place,
-              onChange: (v) => { setPlace(v); handleInputChange('Location', v) },
+              onChange: (v) => {
+                setPlace(v);
+                handleInputChange('Location', v);
+              },
+            }}
+            autocompletionRequest={{
+              componentRestrictions: { country: 'LK' },
             }}
           />
+
           {/* <input
             placeholder="Enter the location"
             onChange={(e) => handleInputChange('Location', e.target.value)}
@@ -237,7 +246,7 @@ function CreateTrip() {
                 <div className="flex flex-col justify-center items-center w-full">
                   <img src={item.icon} className="w-20" />
                   <p className="md:text-xl font-bold">{item.title}</p>
-                <p className={`text-gray-500 text-sm md:text-lg ${formData?.traveler == item.people && 'text-white'}`}>{item.description}</p>
+                  <p className={`text-gray-500 text-sm md:text-lg ${formData?.traveler == item.people && 'text-white'}`}>{item.description}</p>
                 </div>
               </div>
             ))}
@@ -254,16 +263,21 @@ function CreateTrip() {
         <DialogContent>
           <DialogHeader>
             <DialogDescription>
-              <img src="flag.png" alt="" className="w-20" />
-              <h2 className="text-2xl font-semibold text-black mt-7">Sign in with <span className="text-blue-700">G</span><span className="text-red-700">o</span><span className="text-yellow-500">o</span><span className="text-blue-700">g</span><span className="text-green-600">l</span><span className="text-red-700">e</span></h2>
-              <p className="text-black">Sign in to the website with Google authentication securely</p>
-              <button
-                onClick={login}
-                className='w-full border-2 font-bold mt-5 flex items-center gap-3 justify-center'
-              >
-                <FcGoogle className="w-7 h-7" />
-                Sign In with Google
-              </button>
+              <div>
+                <div className="flex justify-end items-center">
+                  <button onClick={() => setOpenDialog(false)} className="bg-white cursor-pointer border-none "><IoClose className="text-2xl" /></button>
+                </div>
+                <img src="/Asset 2xxxhdpi.png" alt="" className="" />
+                <h2 className="text-2xl font-semibold text-black mt-7">Sign in with <span className="text-blue-700">G</span><span className="text-red-700">o</span><span className="text-yellow-500">o</span><span className="text-blue-700">g</span><span className="text-green-600">l</span><span className="text-red-700">e</span></h2>
+                <p className="text-black">Sign in to the website with Google authentication securely</p>
+                <button
+                  onClick={login}
+                  className='w-full bg-white border-2 border-black font-bold mt-5 flex items-center gap-3 justify-center'
+                >
+                  <FcGoogle className="w-7 h-7" />
+                  Sign In with Google
+                </button>
+              </div>
 
             </DialogDescription>
           </DialogHeader>
