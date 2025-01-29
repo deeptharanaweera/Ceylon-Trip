@@ -24,7 +24,7 @@ function PlaceCardItem({ place }) {
     return (
         <Link className="flex flex-col md:flex-row xl:flex-row w-full justify-between items-center border rounded-2xl shadow-xl">
             <div className="w-full md:w-3/4 xl:w-3/4">
-                <img src={photoUrl?photoUrl:"/images (9).jpeg"} alt="" className="w-full rounded-t-2xl md:rounded-tr-none xl:rounded-tr-none md:rounded-l-2xl xl:rounded-l-2xl object-cover h-[250px] md:h[400px] xl:h-[400px]" />
+                <img src={photoUrl?photoUrl:"/images (9).jpeg"} alt="Place Image" className="w-full rounded-t-2xl md:rounded-tr-none xl:rounded-tr-none md:rounded-l-2xl xl:rounded-l-2xl object-cover h-[250px] md:h[400px] xl:h-[400px]" />
             </div>
             <div className="w-full mx-10 flex p-4 md:p-0 xl:p-0 flex-col h-full items-start">
                 <h2 className="md:text-xl xl:text-xl text-orange-500 font-semibold ">⭐⭐⭐{place.rating} Rates</h2>

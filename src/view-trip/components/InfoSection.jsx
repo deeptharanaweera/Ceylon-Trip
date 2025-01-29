@@ -29,7 +29,7 @@ function InfoSection({ trip }) {
 
   const GetPlacePhoto = async () => {
     const data = {
-      textQuery: `Popular travel spots in ${trip?.userSelection?.Location?.label} 10 photos`
+      textQuery: `Popular travel spots in ${trip?.tripData?.location} 10 photos`
     };
     
     
@@ -65,7 +65,7 @@ function InfoSection({ trip }) {
   return (
     <div className="">
       <div className="flex flex-col justify-center items-start">
-        <h1 className="font-bold font-poppins xl:mb-5 p-3 xl:text-[60px] text-3xl">{trip?.userSelection?.Location?.label}</h1>
+        <h1 className="font-bold font-poppins xl:mb-5 p-3 xl:text-[60px] text-3xl">{trip?.tripData?.location}</h1>
         {/* <img src={photoUrl[7]} alt="" className="w-full h-[400px] object-cover xl:rounded-r-xl rounded-tr-xl rounded-tl-xl" /> */}
         {photoUrl.length > 0 ? (
           <Carousel

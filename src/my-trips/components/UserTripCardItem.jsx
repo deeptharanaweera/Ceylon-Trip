@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { SiActualbudget } from "react-icons/si";
 import { Link } from "react-router-dom";
-import logo from '/Asset 2xxxhdpi.png'
+import logo from '/Asset 2xxxhdpi.png';
 
 function UserTripCardItem({ trip }) {
     const [photoUrl, setPhotoUrl] = useState([]);

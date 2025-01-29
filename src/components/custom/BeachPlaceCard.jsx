@@ -1,27 +1,27 @@
-import { GetPlaceDetails, PHOTO_REF_URL } from "@/service/GlobaAPI";
-import { useEffect, useState } from 'react';
+import { GetPlaceDetails, PHOTO_REF_URL } from '@/service/GlobaAPI';
 import { Link } from 'react-router-dom';
 
 
 function BeachPlaceCard({ place, index }) {
-  const [photoUrl, setPhotoUrl] = useState([]);
+  // const [photoUrl, setPhotoUrl] = useState([]);
+  // console.log(place.placeName);
 
-  useEffect(() => {
-    place && GetPlacePhoto();
-  }, [place]);
+  // useEffect(() => {
+  //   place && GetPlacePhoto();
+  // }, [place]);
 
-  const GetPlacePhoto = async () => {
-    const data = {
-      textQuery: place?.placeName
-    };
-    const result = await GetPlaceDetails(data).then(resp => {
-      const PhotoUrl = PHOTO_REF_URL.replace('{NAME}', resp.data.places[0].photos[0].name);
-      setPhotoUrl(PhotoUrl);
-    })
-  };
+  // const GetPlacePhoto = async () => {
+  //   const data = {
+  //     textQuery: place?.placeName
+  //   };
+  //   const result = await GetPlaceDetails(data).then(resp => {
+  //     const PhotoUrl = PHOTO_REF_URL.replace('{NAME}', resp.data.places[0].photos[0].name);
+  //     setPhotoUrl(PhotoUrl);
+  //   })
+  // };
   return (
         <Link to={`https://www.google.com/maps/search/?api=1&query=${place?.placeName}`} target="_blank" key={index} className="bg-white rounded-xl border-2 shadow-lg hover:scale-105 transition-all cursor-pointer">
-          <img src={photoUrl ? photoUrl : "/Asset 2xxxhdpi.png"} alt="Place" className="w-full h-[250px] object-cover rounded-t-xl" />
+          <img src={place?.placeImageUrl} alt="Place" className="w-full h-[250px] object-cover rounded-t-xl" />
           <div className="p-2 px-4 flex flex-col gap-2">
             <div className="lg:flex flex md:flex justify-between w-full">
               <div className="flex justify-center items-center">
