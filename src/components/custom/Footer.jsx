@@ -72,7 +72,7 @@ function Footer() {
                                     href="/create-trip">Generate Trip</a></li>
                                 <li className="mt-[15px]"><a
                                     className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[20px] font-normal hover:font-semibold"
-                                    href="/become-a-tutor">My Trips</a></li>
+                                    href="/my-trips">My Trips</a></li>
                                 
                             </ul>
                         </div>

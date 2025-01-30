@@ -33,25 +33,25 @@ export const SelectBudgetOptions = [
     {
         id: 1,
         title: 'Low',
-        description: 'I am traveling with a tight budget',
+        description: 'Traveling with a tight budget',
         icon: '⭐'
     },
     {
         id: 2,
         title: 'Medium',
-        description: 'I am traveling with a moderate budget',
+        description: 'Traveling with a moderate budget',
         icon: '⭐⭐⭐'
     },
     {
         id: 3,
         title: 'High',
-        description: 'I am traveling with a high budget',
+        description: 'Traveling with a high budget',
         icon: '⭐⭐⭐⭐'
     },
     {
         id: 4,
         title: 'Luxury',
-        description: 'I am traveling with a luxury budget',
+        description: 'Traveling with a luxury budget',
         icon: '⭐⭐⭐⭐⭐'
     }
 ]

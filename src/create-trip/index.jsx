@@ -9,8 +9,9 @@ import { chatSession } from "@/service/AIModal";
 import { db } from "@/service/firebaseConfig";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { IoClose } from "react-icons/io5";
@@ -22,8 +23,9 @@ function CreateTrip() {
   const [errorMessageLocation, setErrorMessageLocation] = useState('');
   const [errorMessageBudget, setErrorMessageBudget] = useState('');
   const [errorMessageTraveler, setErrorMessageTraveler] = useState('');
-
-  const [formData, setFormData] = useState({});
+  const [place, setPlace] = useState('');
+  // const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState([]);
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -51,50 +53,50 @@ function CreateTrip() {
 
   // Fetch location data
 
-  const [locationQuery, setLocationQuery] = useState("");
-  const [locationResults, setLocationResults] = useState([]);
+  // const [locationQuery, setLocationQuery] = useState("");
+  // const [locationResults, setLocationResults] = useState([]);
 
-  const handleLocationSearch = async (address) => {
-    setLocationQuery(address);
+  // const handleLocationSearch = async (address) => {
+  //   setLocationQuery(address);
 
-    if (!address) {
-      setLocationResults([]); // Clear results
-      handleInputChange("location", ""); // Clear formData.location
-      return;
-    }
+  //   if (!address) {
+  //     setLocationResults([]); // Clear results
+  //     handleInputChange("location", ""); // Clear formData.location
+  //     return;
+  //   }
 
-    if (address.length > 2) {
-      try {
-        const citiesCollection = collection(db, "cities");
-        const lowerCaseAddress = address.toLowerCase();
-        const q = query(
-          citiesCollection,
-          where("name", ">=", lowerCaseAddress),
-          where("name", "<=", lowerCaseAddress + "\uf8ff"),
-          where("country", "==", "Sri Lanka")
-        );
-        const querySnapshot = await getDocs(q);
-        const cities = [];
-        querySnapshot.forEach((doc) => {
-          cities.push(doc.data());
-        });
-        setLocationResults(cities);
-      } catch (error) {
-        console.error("Error fetching location data:", error);
-      }
-    } else {
-      setLocationResults([]);
-    }
-  };
+  //   if (address.length > 2) {
+  //     try {
+  //       const citiesCollection = collection(db, "cities");
+  //       const lowerCaseAddress = address.toLowerCase();
+  //       const q = query(
+  //         citiesCollection,
+  //         where("name", ">=", lowerCaseAddress),
+  //         where("name", "<=", lowerCaseAddress + "\uf8ff"),
+  //         where("country", "==", "Sri Lanka")
+  //       );
+  //       const querySnapshot = await getDocs(q);
+  //       const cities = [];
+  //       querySnapshot.forEach((doc) => {
+  //         cities.push(doc.data());
+  //       });
+  //       setLocationResults(cities);
+  //     } catch (error) {
+  //       console.error("Error fetching location data:", error);
+  //     }
+  //   } else {
+  //     setLocationResults([]);
+  //   }
+  // };
 
 
 
-  // Handle location selection
-  const handleSelectLocation = (location) => {
-    setLocationQuery(`${location.name}, ${location.country}`); // Update the input field with the location name
-    setLocationResults([]); // Clear results
-    handleInputChange("location", location);
-  };
+  // // Handle location selection
+  // const handleSelectLocation = (location) => {
+  //   setLocationQuery(`${location.name}, ${location.country}`); // Update the input field with the location name
+  //   setLocationResults([]); // Clear results
+  //   handleInputChange("location", location);
+  // };
 
   const handleInputChange = (name, value) => {
     setFormData({
@@ -118,13 +120,21 @@ function CreateTrip() {
   }, [formData?.noOfDays]);
 
   // Validate Location
+  // useEffect(() => {
+  //   if (formData.location === "") {
+  //     setErrorMessageLocation("Please select a destination");
+  //   } else {
+  //     setErrorMessageLocation(""); // Clear the error message if valid
+  //   }
+  // }, [formData?.location]);
+
   useEffect(() => {
-    if (formData.location === "") {
+    if (formData.Location === "") {
       setErrorMessageLocation("Please select a destination");
     } else {
       setErrorMessageLocation(""); // Clear the error message if valid
     }
-  }, [formData?.location]);
+  }, [formData?.Location]);
 
   // Validate budget
   useEffect(() => {
@@ -172,7 +182,15 @@ function CreateTrip() {
     }
 
     // Validate location
-    if (!formData?.location || formData.location === "" || locationQuery === "" || `${formData?.location.name}, ${formData.location.country}` !== locationQuery) {
+    // if (!formData?.location || formData.location === "" || locationQuery === "" || `${formData?.location.name}, ${formData.location.country}` !== locationQuery) {
+    //   setErrorMessageLocation("Please select a valid destination");
+    //   hasError = true;
+    // } else {
+    //   setErrorMessageLocation(""); // Clear the error message for location
+    // }
+
+    // Validate location
+    if (!formData?.Location || formData.Location === "") {
       setErrorMessageLocation("Please select a valid destination");
       hasError = true;
     } else {
@@ -194,11 +212,12 @@ function CreateTrip() {
     } else {
       setErrorMessageTraveler(""); // Clear the error message for location
     }
-
+    console.log(formData)
     if (!hasError) {
       setLoading(true);
       const FINAL_PROMPT = AI_PROMPT
-        .replace('{location}', `${formData?.location?.name}, ${formData?.location?.country}`)
+        // .replace('{location}', `${formData?.location?.name}, ${formData?.location?.country}`)
+        .replace('{location}', formData?.Location?.label)
         .replace('{totalDays}', formData?.noOfDays)
         .replace('{traveler}', formData?.traveler)
         .replace('{budget}', formData?.budget)
@@ -242,33 +261,44 @@ function CreateTrip() {
     })
   }
 
-  console.log(locationResults)
-
   return (
     <div className="relative">
-      <div className='sm:px-10 md:px-32 lg:px-56 xl:px-50 px-5  mt-[70px] md:mt-[150px]'>
+      <div className='sm:px-10 md:px-32 lg:px-36 xl:px-44 px-5 mt-[70px] md:mt-[100px] md:bg-right h-[0px] xl:h-auto' style={{
+        backgroundImage: "url('/sri-lankan-travel-map.png')",
+        // backgroundPosition: "top",
+        backgroundRepeat: "no-repeat",
+      }}>
         <h1 className="font-poppins font-bold text-[#853b01] mb-5">Plan Your Perfect Trip with Ease 🌴🏖️</h1>
         <h2 className="font-sans font-bold text-4xl">Tell us a bit about your travel preferences</h2>
         <p className="font-poppins text-l text-gray-500">Our AI will create a personalized trip plan just for you. It’s quick, easy, and tailored to your unique needs!</p>
 
         <div className="flex flex-col mt-10 md:mt-20 md:gap-10 gap-6">
-          <div className="flex flex-col">
+          <div className="flex flex-col md:w-2/3">
             <label htmlFor="" className="text-xl font-semibold font-poppins mb-2">What is your destination?</label>
-            {/* <GooglePlacesAutocomplete
-            className=""
-            apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
-            selectProps={{
-              place,
-              onChange: (v) => {
-                setPlace(v);
-                handleInputChange('Location', v);
-              },
-            }}
-            autocompletionRequest={{
-              componentRestrictions: { country: 'LK' },
-            }}
-          /> */}
-            <input
+            <GooglePlacesAutocomplete
+              className=""
+              apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
+              selectProps={{
+                value: place,
+                onChange: (v) => {
+                  setPlace(v);
+                  handleInputChange('Location', v);
+                },
+                onInputChange: () => {
+                  if (!place) {
+                    setPlace(null);
+                  }
+                },
+                isClearable: true, // Enables a clear button inside the input
+              }}
+              autocompletionRequest={{
+                componentRestrictions: { country: 'LK' },
+              }}
+            />
+
+            {errorMessageLocation && <p style={{ color: 'red', marginTop: '4px' }}>{errorMessageLocation}</p>}
+
+            {/* <input
               type="text"
               value={locationQuery}
               onChange={(e) => handleLocationSearch(e.target.value)}
@@ -290,26 +320,25 @@ function CreateTrip() {
             )}
             {errorMessageLocation && (
               <p style={{ color: "red", marginTop: "4px" }}>{errorMessageLocation}</p>
-            )}
+            )} */}
 
             {/* <input
             placeholder="Enter the location"
             onChange={(e) => handleInputChange('Location', e.target.value)}
             className="border border-[#853b01] rounded-md px-4 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#853b01] focus:border-transparent"
           /> */}
-            {/* {errorMessageLocation && <p style={{ color: 'red', marginTop: '4px' }}>{errorMessageLocation}</p>} */}
           </div>
           <div className="flex flex-col">
             <label htmlFor="" className="text-xl font-semibold font-poppins mb-2">How many days are you planning your trip ?  </label>
             <input
               placeholder="Ex. 5"
               type="number"
-              className="border border-[#853b01] rounded-md px-4 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#853b01] focus:border-transparent"
+              className="md:w-2/3 border border-[#853b01] rounded-md px-4 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#853b01] focus:border-transparent"
               onChange={(e) => handleInputChange('noOfDays', e.target.value)}
             />
             {errorMessageDays && <p style={{ color: 'red', marginTop: '4px' }}>{errorMessageDays}</p>}
           </div>
-          <div>
+          <div className="lg:w-2/3">
             <h1 htmlFor="" className="text-xl font-semibold font-poppins mb-2">Choose your budget? </h1>
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:mt-5 ">
               {SelectBudgetOptions.map((item, index) => (
@@ -317,7 +346,7 @@ function CreateTrip() {
                   onClick={() => handleInputChange('budget', item.title)}
                   className={` justify-start items-center gap-2 p-5 border border-[#853b01] rounded-lg cursor-pointer hover:shadow-lg ${formData?.budget == item.title && 'bg-[#713c14f6] text-white border-2 border-[#853b01]'}`}>
                   {/* <img src={item.icon} className="w-20" /> */}
-                  <div className="flex gap-2">
+                  <div className="md:flex gap-2">
                     <p className="md:text-xl font-bold">{item.title}</p>
                     <p>{item.icon}</p>
                   </div>
@@ -346,7 +375,7 @@ function CreateTrip() {
             {errorMessageTraveler && <p style={{ color: 'red', marginTop: '4px' }}>{errorMessageTraveler}</p>}
           </div>
 
-          <div className="flex justify-end mt-5 mb-10">
+          <div className="flex justify-end mt-5 mb-10 lg:w-2/3">
             <button disabled={loading} onClick={OnGenerateTrip} className="text-white text-xl flex items-center gap-3 justify-center">{loading ? <> Generating <AiOutlineLoading3Quarters className="w-7 h-7 animate-spin" /></> : "Generate Trip"}</button>
           </div>
         </div>

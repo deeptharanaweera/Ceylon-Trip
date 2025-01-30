@@ -29,9 +29,9 @@ function UserTripCardItem({ trip }) {
             <div className="p-2 px-4  flex flex-col gap-2 w-full">
                 <div className="lg:flex flex md:flex justify-between w-full">
                     <div className="flex justify-between w-full items-center gap-2 ">
-                        <p className="flex justify-center items-center gap-1 bg-[#00FFFF] py-1 px-2 rounded-xl text-black w-1/3">{trip?.tripData?.duration}</p>
-                        <p className="flex justify-center items-center gap-1 bg-[#00FF00] py-1 px-2 rounded-xl text-black w-1/3">{trip?.tripData?.travelers}</p>
-                        <p className="flex justify-center items-center gap-1 bg-[#FFFF00] py-1 px-2 rounded-xl text-black w-1/3"><SiActualbudget />{trip?.tripData?.budget}</p>
+                        <p className="flex justify-center items-center  bg-[#00FFFF] py-1 px-1 rounded-xl text-black w-1/3">{trip?.tripData?.duration}</p>
+                        <p className="flex justify-center items-center  bg-[#00FF00] py-1 md:px-1 rounded-xl text-black w-1/3">{trip?.tripData?.travelers}</p>
+                        <p className="flex justify-center items-center gap-1 bg-[#FFFF00] py-1 px-1 rounded-xl text-black w-1/3"><SiActualbudget />{trip?.tripData?.budget}</p>
                     </div>
                 </div>
                 <div className="py-2 flex flex-col gap-1">
