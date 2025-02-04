@@ -289,7 +289,7 @@ function CreateTrip() {
                     setPlace(null);
                   }
                 },
-                
+                isClearable: true, // Enables a clear button inside the input
               }}
               autocompletionRequest={{
                 componentRestrictions: { country: 'LK' },
