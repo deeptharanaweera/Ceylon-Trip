@@ -273,7 +273,7 @@ function CreateTrip() {
         <p className="font-poppins text-l text-gray-500">Our AI will create a personalized trip plan just for you. It’s quick, easy, and tailored to your unique needs!</p>
 
         <div className="flex flex-col mt-10 md:mt-20 md:gap-10 gap-6">
-          <div className="flex flex-col mdw-2/3">
+          <div className="flex flex-col md:w-2/3">
             <label htmlFor="" className="text-xl font-semibold font-poppins mb-2">What is your destination?</label>
             <GooglePlacesAutocomplete
               className=""
@@ -289,7 +289,7 @@ function CreateTrip() {
                     setPlace(null);
                   }
                 },
-                isClearable: true, // Enables a clear button inside the input
+                
               }}
               autocompletionRequest={{
                 componentRestrictions: { country: 'LK' },
