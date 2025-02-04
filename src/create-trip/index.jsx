@@ -276,7 +276,6 @@ function CreateTrip() {
           <div className="flex flex-col md:w-2/3">
             <label htmlFor="" className="text-xl font-semibold font-poppins mb-2">What is your destination?</label>
             <GooglePlacesAutocomplete
-              className=""
               apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
               selectProps={{
                 value: place,
@@ -289,12 +288,20 @@ function CreateTrip() {
                     setPlace(null);
                   }
                 },
-                isClearable: true, // Enables a clear button inside the input
+                isClearable: true,
+                placeholder: "Enter a destination",
+                styles: {
+                  control: (provided) => ({
+                    ...provided,
+                    minHeight: '50px', // Ensures the input is visible
+                  }),
+                },
               }}
               autocompletionRequest={{
                 componentRestrictions: { country: 'LK' },
               }}
             />
+
 
             {errorMessageLocation && <p style={{ color: 'red', marginTop: '4px' }}>{errorMessageLocation}</p>}
 
